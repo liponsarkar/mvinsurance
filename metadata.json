@@ -1,0 +1,6 @@
+{
+  "name": "MV Insurance",
+  "description": "Agencia de seguros líder en Puerto Rico. Planes médicos, seguro de vida, cáncer, auto full cover, propiedad comercial y retiro con Janet López.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

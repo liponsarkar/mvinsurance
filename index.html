@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      // Defensive fix for browser extensions/interceptors attempting to assign window.fetch
+      (function() {
+        try {
+          var _origFetch = window.fetch;
+          var _fetch = function() {
+            return _origFetch.apply(this, arguments);
+          };
+          var descriptor = {
+            configurable: true,
+            enumerable: true,
+            get: function() {
+              return _fetch;
+            },
+            set: function(fn) {
+              _fetch = fn;
+            }
+          };
+          Object.defineProperty(window, 'fetch', descriptor);
+          if (typeof Window !== 'undefined' && Window.prototype) {
+            try {
+              Object.defineProperty(Window.prototype, 'fetch', descriptor);
+            } catch (_) {}
+          }
+        } catch (err) {
+          // Fallback if property definition is restricted
+        }
+
+        window.addEventListener('error', function(event) {
+          if (event && event.message && event.message.indexOf('Cannot set property fetch') !== -1) {
+            if (typeof event.preventDefault === 'function') event.preventDefault();
+            if (typeof event.stopImmediatePropagation === 'function') event.stopImmediatePropagation();
+            return true;
+          }
+        }, true);
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MV Insurance | Seguros en Puerto Rico - Janet López</title>
+    <meta
+      name="description"
+      content="Planes médicos, seguros de vida, cáncer, auto full cover y retiro en Puerto Rico. Asesoría profesional y personalizada con Janet López."
+    />
+    <link rel="canonical" href="https://www.mvinsurancespr.com" />
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="MV Insurance" />
+    <meta property="og:title" content="MV Insurance | Seguros en Puerto Rico - Janet López" />
+    <meta
+      property="og:description"
+      content="Protege tu salud, auto, patrimonio y futuro en Puerto Rico con MV Insurance. Orientación personalizada y cotizaciones directas."
+    />
+    <meta property="og:locale" content="es_PR" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="MV Insurance | Seguros en Puerto Rico" />
+    <meta
+      name="twitter:description"
+      content="Planes médicos, auto full cover, vida, cáncer y retiro. Asesoría con Janet López."
+    />
+
+    <!-- Google Fonts: Plus Jakarta Sans, Playfair Display & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Schema.org InsuranceAgency JSON-LD -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "InsuranceAgency",
+        "name": "MV Insurance",
+        "alternateName": "MV Insurance Puerto Rico",
+        "description": "Agencia independiente de seguros en Puerto Rico especializada en salud, vida, cáncer, auto full cover, propiedad comercial y retiro.",
+        "url": "https://www.mvinsurancespr.com",
+        "telephone": "+1-786-356-5990",
+        "email": "oficina@mvinsurancespr.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "4 Calle Ramos Antonini",
+          "addressLocality": "Las Piedras",
+          "addressRegion": "PR",
+          "postalCode": "00771",
+          "addressCountry": "US"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "18.1827",
+          "longitude": "-65.8671"
+        },
+        "areaServed": {
+          "@type": "State",
+          "name": "Puerto Rico"
+        },
+        "priceRange": "$$",
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "08:30",
+            "closes": "17:30"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Saturday"],
+            "opens": "09:00",
+            "closes": "13:00"
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body class="bg-[#F5F5F7] text-[#292929] antialiased selection:bg-[#D90070] selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
